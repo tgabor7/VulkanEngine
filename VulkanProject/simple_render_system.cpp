@@ -18,7 +18,7 @@ namespace lve {
 		glm::mat4 normalMatrix{1.0f};
 	};
 
-	SimpleRenderSystem::SimpleRenderSystem(LveDevice& device, VkRenderPass renderPass) : lveDevice{device}
+	SimpleRenderSystem::SimpleRenderSystem(LveDevice& device, VkRenderPass renderPass, LveRenderer &renderer) : lveDevice{ device }, renderer{ renderer }
 	{
 		createPipelineLayout();
 		createPipeline(renderPass);
@@ -37,14 +37,16 @@ namespace lve {
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pSetLayouts = nullptr;
+		pipelineLayoutInfo.setLayoutCount = 1;
+		VkDescriptorSetLayout descriptor = renderer.getSwapChainDescriptorSetLayout();
+		pipelineLayoutInfo.pSetLayouts = &descriptor;
 		pipelineLayoutInfo.pushConstantRangeCount = 1;
 		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 		if (vkCreatePipelineLayout(lveDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create pipeline layout!");
 		}
 	}
+	
 	void SimpleRenderSystem::createPipeline(VkRenderPass renderPass)
 	{
 		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
@@ -59,7 +61,7 @@ namespace lve {
 			pipelineConfig);
 	}
 
-	void SimpleRenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<LveGameObject>& gameObjects, const LveCamera& camera)
+	void SimpleRenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, VkDescriptorSet descriptorSet, std::vector<LveGameObject>& gameObjects, const LveCamera& camera)
 	{
 		lvePipeline->bind(commandBuffer);
 
@@ -74,6 +76,7 @@ namespace lve {
 
 			vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
 			obj.model->bind(commandBuffer);
+			vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
 			obj.model->draw(commandBuffer);
 		}
 	}

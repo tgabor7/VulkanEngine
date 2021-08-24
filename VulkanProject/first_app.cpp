@@ -29,7 +29,7 @@ namespace lve {
 	}
 	void FirstApp::run() {
 
-		SimpleRenderSystem simpleRenderSystem{lveDevice,lveRenderer.getSwapChainRenderPass()};
+		SimpleRenderSystem simpleRenderSystem{lveDevice,lveRenderer.getSwapChainRenderPass(), lveRenderer};
         LveCamera camera{};
         camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0, 0, 2.5f));
 
@@ -55,7 +55,7 @@ namespace lve {
 			if (auto commandBuffer = lveRenderer.beginFrame()) {
 
 				lveRenderer.beginSwapChainRenderPass(commandBuffer);
-				simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
+				simpleRenderSystem.renderGameObjects(commandBuffer, lveRenderer.getCurrentDescriptorSet(), gameObjects, camera);
 				lveRenderer.endSwapChainRenderPass(commandBuffer);
 				lveRenderer.endFrame();
 			}

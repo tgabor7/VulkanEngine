@@ -10,7 +10,15 @@
 #include <vector>
 #include <memory>
 
+#include <glm/mat4x4.hpp>
+
 namespace lve {
+
+    struct UniformBufferObject {
+        glm::mat4 model;
+        glm::mat4 view;
+        glm::mat4 proj;
+    };
 
 class LveSwapChain {
  public:
@@ -39,11 +47,13 @@ class LveSwapChain {
 
   VkResult acquireNextImage(uint32_t *imageIndex);
   VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
+  VkDescriptorSetLayout descriptorSetLayout;
 
   bool compareSwapFormats(const LveSwapChain& swapChain) const
   {
       return swapChain.swapChainDepthFormat == swapChainDepthFormat && swapChain.swapChainImageFormat == swapChainImageFormat;
   }
+  std::vector<VkDescriptorSet> descriptorSets;
 
  private:
   void init();
@@ -53,6 +63,11 @@ class LveSwapChain {
   void createRenderPass();
   void createFramebuffers();
   void createSyncObjects();
+  void createDescriptorSetLayout();
+  void createUniformBuffers();
+  void updateUniformBuffer(uint32_t currentImage);
+  void createDescriptorPool();
+  void createDescriptorSets();
 
   // Helper functions
   VkSurfaceFormatKHR chooseSwapSurfaceFormat(
@@ -73,6 +88,11 @@ class LveSwapChain {
   std::vector<VkImageView> depthImageViews;
   std::vector<VkImage> swapChainImages;
   std::vector<VkImageView> swapChainImageViews;
+  std::vector<VkBuffer> uniformBuffers;
+  std::vector<VkDeviceMemory> uniformBuffersMemory;
+
+  VkDescriptorPool descriptorPool;
+
 
   LveDevice &device;
   VkExtent2D windowExtent;
@@ -85,6 +105,10 @@ class LveSwapChain {
   std::vector<VkFence> inFlightFences;
   std::vector<VkFence> imagesInFlight;
   size_t currentFrame = 0;
+
+  VkBuffer indexBuffer;
+  VkDeviceMemory indexBufferMemory;
+
 };
 
 }  // namespace lve

@@ -19,6 +19,7 @@ namespace lve {
 		LveRenderer(const LveRenderer&) = delete;
 		LveRenderer& operator=(const LveRenderer&) = delete;
 
+		VkDescriptorSetLayout getSwapChainDescriptorSetLayout() { return lveSwapChain->descriptorSetLayout; }
 		VkRenderPass getSwapChainRenderPass() const { return lveSwapChain->getRenderPass(); }
 		float getAspectRatio() const { return lveSwapChain->extentAspectRatio(); }
 		bool isFrameInProgress() const { return isFrameStarted; }
@@ -27,6 +28,10 @@ namespace lve {
 		{ 
 			assert(isFrameStarted && "Cannot get command buffer when frame not in progress.");
 			return commandBuffers[currentFrameIndex];
+		}
+		VkDescriptorSet getCurrentDescriptorSet() const
+		{
+			return lveSwapChain->descriptorSets[currentFrameIndex];
 		}
 
 		int getFrameIndex() const

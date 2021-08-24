@@ -1,2 +1,5 @@
-﻿  first_app.cpp
+﻿  lve_swap_chain.cpp
+C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\lve_swap_chain.cpp(92,22): warning C4101: 'pipelineLayout': unreferenced local variable
+C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\lve_swap_chain.cpp(110,30): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\lve_swap_chain.cpp(217,35): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
   VulkanProject.vcxproj -> C:\Users\tgabo\source\repos\VulkanProject\x64\Debug\VulkanProject.exe

@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\tinyobjectloader;C:\VulkanSDK\1.2.182.0\Include;C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\glfw\include;C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\imageloader;C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\tinyobjectloader;C:\VulkanSDK\1.2.182.0\Include;C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\glfw\include;C:\Users\tgabo\source\repos\VulkanProject\VulkanProject\libraries\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -151,6 +151,7 @@
     <ClCompile Include="keyboard_movement_controller.cpp" />
     <ClCompile Include="lve_camera.cpp" />
     <ClCompile Include="lve_game_object.cpp" />
+    <ClCompile Include="lve_image.cpp" />
     <ClCompile Include="lve_model.cpp" />
     <ClCompile Include="lve_pipeline.cpp" />
     <ClCompile Include="lve_renderer.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="keyboard_movement_controller.hpp" />
     <ClInclude Include="lve_camera.hpp" />
     <ClInclude Include="lve_game_object.hpp" />
+    <ClInclude Include="lve_image.hpp" />
     <ClInclude Include="lve_model.hpp" />
     <ClInclude Include="lve_pipeline.hpp" />
     <ClInclude Include="lve_renderer.hpp" />

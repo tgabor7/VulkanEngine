@@ -13,6 +13,12 @@ layout(push_constant) uniform Push {
 	mat4 normalMatrix;
 } push;
 
+layout(binding = 0) uniform UniformBufferObject {
+    mat4 model;
+    mat4 view;
+    mat4 proj;
+} ubo;
+
 const vec3 DIRECTION_TO_LIGHT = normalize(vec3(1.0,-3.0,-1.0));
 const float AMBIENT = 0.02;
 
